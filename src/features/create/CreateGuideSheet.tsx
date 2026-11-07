@@ -91,7 +91,7 @@ export function CreateGuideSheet() {
     >
       <div className="mb-4 flex gap-1.5" aria-label={`Step ${step + 1} of 4: ${STEPS[step]}`}>
         {STEPS.map((s, i) => (
-          <div key={s} className={cn('h-1 flex-1 rounded-full transition-colors', i <= step ? 'bg-orange-500' : 'bg-black/10 dark:bg-white/15')} />
+          <div key={s} className={cn('h-1 flex-1 rounded-full transition-colors', i <= step ? 'bg-ig-pink' : 'bg-black/10 dark:bg-white/15')} />
         ))}
       </div>
       <p className="text-2 text-[13px] font-medium uppercase tracking-wide">
@@ -117,7 +117,7 @@ export function CreateGuideSheet() {
                     whileTap={{ scale: 0.97 }}
                     onClick={() => setDestId(d.id)}
                     aria-pressed={destId === d.id}
-                    className={cn('relative h-16 overflow-hidden rounded-2xl px-3 text-left text-white', destId === d.id && 'ring-2 ring-orange-500 ring-offset-2 ring-offset-transparent')}
+                    className={cn('relative h-16 overflow-hidden rounded-2xl px-3 text-left text-white', destId === d.id && 'ring-2 ring-ig-pink ring-offset-2 ring-offset-transparent')}
                     style={{ background: gradientCss(d.gradient) }}
                   >
                     <span className="text-[15px] font-bold drop-shadow">{d.name}</span>
@@ -152,9 +152,9 @@ export function CreateGuideSheet() {
                       whileTap={{ scale: 0.97 }}
                       onClick={() => setTrip(t.value)}
                       aria-pressed={on}
-                      className={cn('glass rounded-2xl p-4 text-left', on && 'ring-2 ring-orange-500')}
+                      className={cn('glass rounded-2xl p-4 text-left', on && 'ring-2 ring-ig-pink')}
                     >
-                      <Icon className={on ? 'text-orange-500' : ''} />
+                      <Icon className={on ? 'text-ig-pink' : ''} />
                       <p className="mt-2 text-[16px] font-semibold">{t.label}</p>
                       <p className="text-2 text-[12px]">{t.hint}</p>
                     </motion.button>

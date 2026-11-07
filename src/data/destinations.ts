@@ -79,7 +79,7 @@ export function customDestination(name: string): Destination {
     name: clean,
     country: '',
     landmarks: [`the most famous spot in ${clean}`, `a hidden corner of ${clean}`],
-    gradient: ['#ff9f43', '#ff5e7e', '#3a7bd5'],
+    gradient: ['#fa7e1e', '#d62976', '#962fbf'],
   };
 }
 

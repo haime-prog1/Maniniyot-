@@ -22,7 +22,7 @@ export function ShotDetailSheet({ listId, shot, onClose }: Props) {
     <BottomSheet open={!!shot} onClose={onClose} title={shot?.title}>
       {shot && (
         <div className="space-y-5 pt-1">
-          <p className="text-[12px] font-semibold uppercase tracking-wide text-orange-500">{phaseLabel(shot.phase)}</p>
+          <p className="text-[12px] font-semibold uppercase tracking-wide text-ig-pink">{phaseLabel(shot.phase)}</p>
           <p className="-mt-3 text-[16px] leading-relaxed">{shot.description}</p>
 
           <div className="flex gap-4">
@@ -40,7 +40,7 @@ export function ShotDetailSheet({ listId, shot, onClose }: Props) {
                 <dt className="text-2 text-[12px]">Movement</dt>
                 <dd className="font-semibold">{shot.movement}</dd>
               </div>
-              <p className="text-2 text-[12px] leading-snug">Place the subject where the orange shape sits, on the thirds lines.</p>
+              <p className="text-2 text-[12px] leading-snug">Place the subject where the pink shape sits, on the thirds lines.</p>
             </dl>
           </div>
 

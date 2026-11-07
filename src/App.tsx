@@ -39,7 +39,7 @@ function AnimatedRoutes() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
         transition={spring}
-        className="relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+110px)]"
+        className="relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
       >
         <Routes location={location}>
           <Route path="/" element={<HomeScreen />} />
