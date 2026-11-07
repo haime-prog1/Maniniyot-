@@ -3,6 +3,9 @@ import type { Destination } from '../types';
 export const DESTINATIONS: Destination[] = [
   {
     id: 'boracay',
+    lat: 11.9674,
+    lng: 121.9248,
+    timeZone: 'Asia/Manila',
     name: 'Boracay',
     country: 'Philippines',
     tagline: 'White Beach & paraw sunsets',
@@ -13,6 +16,9 @@ export const DESTINATIONS: Destination[] = [
   },
   {
     id: 'siargao',
+    lat: 9.8482,
+    lng: 126.0458,
+    timeZone: 'Asia/Manila',
     name: 'Siargao',
     country: 'Philippines',
     tagline: 'Surf, palms & island roads',
@@ -23,6 +29,9 @@ export const DESTINATIONS: Destination[] = [
   },
   {
     id: 'elnido',
+    lat: 11.1949,
+    lng: 119.4013,
+    timeZone: 'Asia/Manila',
     name: 'El Nido',
     country: 'Philippines',
     tagline: 'Lagoons & limestone cliffs',
@@ -33,6 +42,9 @@ export const DESTINATIONS: Destination[] = [
   },
   {
     id: 'baguio',
+    lat: 16.4023,
+    lng: 120.596,
+    timeZone: 'Asia/Manila',
     name: 'Baguio',
     country: 'Philippines',
     tagline: 'Pine trees & cold mornings',
@@ -41,6 +53,9 @@ export const DESTINATIONS: Destination[] = [
   },
   {
     id: 'bohol',
+    lat: 9.6496,
+    lng: 123.8547,
+    timeZone: 'Asia/Manila',
     name: 'Bohol',
     country: 'Philippines',
     tagline: 'Chocolate Hills & river cruises',
@@ -51,6 +66,9 @@ export const DESTINATIONS: Destination[] = [
   },
   {
     id: 'coron',
+    lat: 11.9986,
+    lng: 120.2043,
+    timeZone: 'Asia/Manila',
     name: 'Coron',
     country: 'Philippines',
     tagline: 'Crystal lakes & wrecks',
@@ -61,6 +79,9 @@ export const DESTINATIONS: Destination[] = [
   },
   {
     id: 'japan',
+    lat: 35.6762,
+    lng: 139.6503,
+    timeZone: 'Asia/Tokyo',
     name: 'Japan (Tokyo)',
     country: 'Japan',
     tagline: 'Neon nights & temples',

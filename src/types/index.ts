@@ -23,6 +23,10 @@ export interface Destination {
   airportName?: string;
   portName?: string;
   landmarks: string[];
+  lat?: number;
+  lng?: number;
+  /** IANA time zone, used to show sun times in local time. */
+  timeZone?: string;
   /** Two to three hex colours used for the card art. */
   gradient: string[];
   tagline?: string;
@@ -66,6 +70,10 @@ export interface ShotList {
   targetLength: TargetLength;
   shots: ListShot[];
   createdAt: number;
+  /** Trip date (YYYY-MM-DD), used by the Light Planner and countdown stories. */
+  tripDate?: string;
+  /** Coordinates for custom destinations, from "Use my location". */
+  coords?: { lat: number; lng: number };
 }
 
 export type ThemePref = 'system' | 'light' | 'dark';

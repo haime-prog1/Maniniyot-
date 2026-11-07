@@ -47,7 +47,8 @@ export function buildLocalShotList({ destination, style, tripType, targetLength 
     if (pick && !inPhase(pool0, p).some((s) => chosen.has(s.id))) chosen.add(pick.id);
   }
   // 3. Then add the rest of the destination highlights.
-  for (const s of specific) if (chosen.size < budget) chosen.add(s.id);
+  // Signature spots are the point of a destination guide, so they get a little extra room.
+  for (const s of specific) if (chosen.size < budget + 4) chosen.add(s.id);
   // 4. Fill the remaining slots round-robin across phases for balance.
   const queues = PHASE_ORDER.map((p) => inPhase(generic, p).filter((s) => !chosen.has(s.id)));
   while (chosen.size < budget && queues.some((q) => q.length)) {

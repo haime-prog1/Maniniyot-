@@ -1,4 +1,4 @@
-import { Copy, Map, Trash2 } from 'lucide-react';
+import { Copy, Map, Sparkles, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { GlassButton, GlassCard, LargeTitle, ProgressRing } from '../../components/ui';
 import { styleLabel, tripLabel } from '../../data/options';
@@ -57,6 +57,9 @@ export function MyTrips() {
                 </div>
               </button>
               <div className="mt-3 flex gap-2">
+                <GlassButton size="sm" icon={<Sparkles size={14} />} onClick={() => navigate(`/stories/${l.id}`)}>
+                  Story
+                </GlassButton>
                 <GlassButton size="sm" icon={<Copy size={14} />} onClick={() => duplicateList(l.id)}>
                   Duplicate
                 </GlassButton>
