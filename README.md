@@ -17,7 +17,7 @@ npm run preview    # serves the production build
 
 ### Install on iPhone
 
-1. Deploy `dist/` to any static host (GitHub Pages, Netlify, Vercel). The build uses relative paths and hash routing, so a sub-folder works.
+1. Every push to `main` is built and published to GitHub Pages by `.github/workflows/deploy.yml` (one-time setup: repo **Settings → Pages → Source: GitHub Actions**). The app is then at `https://haime-prog1.github.io/Maniniyot-/`. Any other static host works too: the build uses relative paths and hash routing.
 2. Open the URL in Safari → **Share** → **Add to Home Screen**.
 3. The app runs full-screen and works offline.
 
