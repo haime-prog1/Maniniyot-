@@ -1,181 +1,28 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Maniniyot – Reel Shot Guide</title>
-<style>
-  :root { --bg:#0f1115; --card:#1a1d24; --text:#eef0f4; --muted:#9aa1ad; --accent:#ffb84d; --line:#2a2e37; }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--text); }
-  main { max-width: 680px; margin: 0 auto; padding: 24px 16px 60px; }
-  h1 { margin: 0 0 4px; font-size: 1.7rem; }
-  h1 span { color: var(--accent); }
-  .sub { color: var(--muted); margin: 0 0 24px; }
-  label { display:block; font-size:.85rem; color:var(--muted); margin: 14px 0 6px; }
-  input, select { width:100%; padding:12px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--text); font-size:1rem; }
-  button { margin-top:18px; width:100%; padding:14px; border:0; border-radius:10px; background:var(--accent); color:#1a1200; font-weight:700; font-size:1rem; cursor:pointer; }
-  .progress { margin: 28px 0 12px; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:.9rem; }
-  .bar { height:6px; background:var(--line); border-radius:3px; overflow:hidden; margin-bottom:16px; }
-  .bar div { height:100%; background:var(--accent); width:0; transition:width .3s; }
-  ol { list-style:none; padding:0; margin:0; counter-reset: shot; }
-  li { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:10px; display:flex; gap:12px; }
-  li.done { opacity:.5; }
-  li.done h3 { text-decoration: line-through; }
-  li input { width:22px; height:22px; flex:none; margin-top:2px; accent-color: var(--accent); }
-  h3 { margin:0 0 4px; font-size:1rem; }
-  h3::before { counter-increment: shot; content: counter(shot) ". "; color: var(--accent); }
-  p { margin: 4px 0; font-size:.92rem; line-height:1.4; }
-  .tip { color: var(--muted); font-size:.85rem; }
-  .meta { font-size:.75rem; color:var(--accent); margin-top:6px; }
-  .tips { margin-top:24px; background:var(--card); border-radius:12px; padding:14px 18px; border:1px solid var(--line); }
-  .tips h2 { font-size:1rem; margin:0 0 8px; }
-  .tips ul { margin:0; padding-left:18px; color:var(--muted); font-size:.9rem; }
-</style>
-</head>
-<body>
-<main>
-  <h1>Maniniyot<span>.</span></h1>
-  <p class="sub">Tell us where you're going, and we'll give you the shot list for a cinematic travel reel.</p>
-
-  <label for="place">Destination</label>
-  <input id="place" placeholder="e.g. Boracay" value="Boracay">
-
-  <label for="type">Type of trip</label>
-  <select id="type">
-    <option value="beach">Beach / Island</option>
-    <option value="city">City</option>
-    <option value="mountain">Mountain / Nature</option>
-    <option value="food">Food trip</option>
-  </select>
-
-  <label for="travel">How are you getting there?</label>
-  <select id="travel">
-    <option value="plane">Plane</option>
-    <option value="boat">Boat / Ferry</option>
-    <option value="car">Car / Road trip</option>
-  </select>
-
-  <button id="go">Generate my shot list</button>
-
-  <section id="result" hidden>
-    <div class="progress"><strong id="title"></strong><span id="count"></span></div>
-    <div class="bar"><div id="fill"></div></div>
-    <ol id="list"></ol>
-    <div class="tips">
-      <h2>Cinematic tips</h2>
-      <ul>
-        <li>Shoot in 4K at 60fps if you can, so you can slow clips down later.</li>
-        <li>Keep each clip 3–5 seconds long, and move the camera slowly and steadily.</li>
-        <li>Golden hour (just after sunrise or before sunset) gives the best light.</li>
-        <li>Mix wide, medium, and close-up shots so the reel doesn't feel repetitive.</li>
-        <li>Cut your clips to the beat of a trending song when you edit.</li>
-      </ul>
-    </div>
-  </section>
-</main>
-
-<script>
-const travelShots = {
-  plane: [
-    ["Airport arrival", "Walking into the departure airport with your bags.", "Film from behind at waist height while you walk.", "3s"],
-    ["Window seat", "The view out of the airplane window during takeoff or above the clouds.", "Hold the phone close to the glass to avoid reflections.", "4s"],
-    ["Getting off the plane", "Walking down the stairs or through the arrival gate.", "Ask a friend to film you from below for a 'main character' feel.", "3s"],
-    ["Airport sign", "The name of the arrival airport for {place}.", "Start out of focus, then slowly focus on the sign.", "2s"],
-  ],
-  boat: [
-    ["Pier", "Walking along the pier toward the boat.", "Use a low angle with the water in the frame.", "3s"],
-    ["On the boat", "Wind in your hair, water splashing, the island coming closer.", "Film the bow cutting through the water.", "4s"],
-    ["Arrival", "Stepping off the boat onto {place}.", "Get a close-up of your feet touching the ground or sand.", "2s"],
-  ],
-  car: [
-    ["Packing the car", "Bags going into the trunk.", "Use a quick top-down shot.", "2s"],
-    ["The road", "The road ahead through the windshield.", "Hold the phone steady against the dashboard.", "4s"],
-    ["Welcome sign", "A road sign or landmark welcoming you to {place}.", "Film it as you drive past, then slow it down.", "2s"],
-  ],
-};
-
-const tripShots = {
-  beach: [
-    ["First look at the beach", "Your first view of the sand and sea in {place}.", "Reveal shot: start pointing at the ground, then tilt up.", "4s"],
-    ["Feet in the sand", "A close-up of your feet walking on the shore.", "Let a wave wash over them.", "3s"],
-    ["Hotel or resort", "Opening the door to your room or walking into the resort.", "POV shot from your eyes.", "3s"],
-    ["Running into the water", "You or your group running into the sea.", "Film from behind and slow it down.", "3s"],
-    ["Island hopping or activity", "Snorkeling, a boat tour, or water sports.", "Use an underwater case for an underwater shot.", "5s"],
-    ["Drinks or food", "A fresh coconut, a shake, or seafood on the table.", "Shoot from above in natural light.", "2s"],
-    ["Sunset", "The sun going down over the water in {place}.", "Put someone in silhouette against the sun.", "5s"],
-    ["Night vibes", "Lights, bonfire, or the beach at night.", "Keep the phone very still. Low light blurs easily.", "3s"],
-    ["Ending shot", "Walking away along the shore, or a 'goodbye {place}' moment.", "A slow zoom out makes a great ending.", "4s"],
-  ],
-  city: [
-    ["Skyline", "A wide shot of the {place} skyline.", "Find a rooftop or bridge.", "4s"],
-    ["Street walk", "Walking through a busy street.", "Film from behind, following the subject.", "3s"],
-    ["Landmark", "The most famous landmark in {place}.", "Move slowly toward it to create depth.", "4s"],
-    ["Transport", "A train, jeepney, or taxi ride.", "Film the view out the window.", "3s"],
-    ["Café or street food", "Hands holding food or coffee.", "Close-up with a blurry background.", "2s"],
-    ["City at night", "Neon lights and traffic.", "A slow pan across the lights.", "4s"],
-    ["Ending shot", "You looking out over the city.", "A wide shot with you small in the frame.", "4s"],
-  ],
-  mountain: [
-    ["Trail start", "The trailhead or start of the hike in {place}.", "Low angle on your boots.", "3s"],
-    ["Hiking", "Walking up the trail.", "Film from in front as you walk toward the camera.", "4s"],
-    ["Nature details", "Leaves, flowers, a stream.", "Close-ups add texture.", "2s"],
-    ["Sea of clouds or view", "The view from the top.", "Reveal shot from behind a rock or tree.", "5s"],
-    ["Summit moment", "Arms up at the peak.", "Wide shot to show how big it is.", "3s"],
-    ["Campfire or coffee", "A cozy moment at camp.", "Steam from coffee looks great against the light.", "3s"],
-    ["Ending shot", "Walking back down at sunset.", "Silhouette against the sky.", "4s"],
-  ],
-  food: [
-    ["Restaurant sign", "The storefront or sign of a famous spot in {place}.", "Rack focus from the sign to you.", "2s"],
-    ["Cooking", "Food being cooked, grilled, or poured.", "Get close and use slow motion.", "4s"],
-    ["The table", "All the dishes on the table.", "Shoot from directly above.", "3s"],
-    ["First bite", "Your reaction to the first bite.", "Medium close-up of your face.", "3s"],
-    ["Cheese pull or pour", "Sauce, cheese, or a drink being poured.", "Slow motion makes this pop.", "2s"],
-    ["Local market", "Stalls and fresh ingredients.", "Walk through slowly.", "4s"],
-    ["Ending shot", "An empty plate or a happy, full group.", "End with a smile.", "3s"],
-  ],
-};
-
-const $ = id => document.getElementById(id);
-let key = "";
-
-function render() {
-  const place = $("place").value.trim() || "your destination";
-  const shots = [...travelShots[$("travel").value], ...tripShots[$("type").value]];
-  key = "maniniyot:" + [place, $("type").value, $("travel").value].join("|").toLowerCase();
-  let done = [];
-  try { done = JSON.parse(localStorage.getItem(key)) || []; } catch {}
-
-  $("title").textContent = `${place} reel – ${shots.length} shots`;
-  $("list").innerHTML = "";
-  shots.forEach(([title, desc, tip, dur], i) => {
-    const li = document.createElement("li");
-    const fill = s => s.replaceAll("{place}", place);
-    li.innerHTML = `<input type="checkbox" aria-label="Done"><div><h3></h3><p></p><p class="tip"></p><div class="meta">Clip length: ${dur}</div></div>`;
-    li.querySelector("h3").textContent = fill(title);
-    li.querySelector("p").textContent = fill(desc);
-    li.querySelector(".tip").textContent = "Tip: " + fill(tip);
-    const cb = li.querySelector("input");
-    cb.checked = done.includes(i);
-    li.classList.toggle("done", cb.checked);
-    cb.onchange = () => {
-      li.classList.toggle("done", cb.checked);
-      done = cb.checked ? [...done, i] : done.filter(x => x !== i);
-      try { localStorage.setItem(key, JSON.stringify(done)); } catch {}
-      update(shots.length, done.length);
-    };
-    $("list").appendChild(li);
-  });
-  update(shots.length, done.length);
-  $("result").hidden = false;
-}
-
-function update(total, n) {
-  $("count").textContent = `${n}/${total} done`;
-  $("fill").style.width = (n / total * 100) + "%";
-}
-
-$("go").onclick = () => { render(); $("result").scrollIntoView({ behavior: "smooth" }); };
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ShotList" />
+    <meta name="theme-color" content="#05070d" />
+    <meta name="description" content="The shot list for a cinematic travel Reel, from departure to going home." />
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <title>ShotList</title>
+    <script>
+      // Apply the saved theme before first paint to avoid a flash.
+      try {
+        var t = (JSON.parse(localStorage.getItem('shotlist-store') || '{}').state || {}).theme;
+        var dark = t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

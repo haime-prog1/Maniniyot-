@@ -1,0 +1,22 @@
+# Dependencies & builds
+node_modules/
+dist/
+dev-dist/
+*.log
+.DS_Store
+
+# Secrets
+.env*
+
+# Media: captured clips and photos must never be committed
+*.mp4
+*.mov
+*.jpg
+*.jpeg
+*.png
+*.heic
+/media
+
+# ...except the app icons
+!public/icons/
+!public/icons/*.png
