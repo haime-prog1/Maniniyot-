@@ -100,7 +100,7 @@ export function ShotCard({ listId, shot, number, onOpen, onCapture }: Props) {
           <CheckButton checked={shot.captured} onToggle={() => toggle(listId, shot.id)} label={`Mark "${shot.title}" as captured`} />
           <button onClick={onOpen} className="min-w-0 flex-1 text-left">
             <h3 className={cn('text-[16px] font-semibold leading-snug', shot.captured && 'text-2 line-through')}>
-              <span className="text-orange-500">{number}.</span> {shot.title}
+              <span className="text-ig-pink">{number}.</span> {shot.title}
             </h3>
             <p className="text-2 mt-1 line-clamp-2 text-[14px] leading-snug">{shot.description}</p>
           </button>

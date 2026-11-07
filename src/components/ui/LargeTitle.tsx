@@ -33,7 +33,7 @@ export function LargeTitle({ title, subtitle, right, onBack }: Props) {
       >
         <div className="relative flex h-12 items-center justify-center px-4">
           {onBack && (
-            <button aria-label="Back" tabIndex={compact ? 0 : -1} onClick={onBack} className="absolute left-2 p-1 text-orange-500">
+            <button aria-label="Back" tabIndex={compact ? 0 : -1} onClick={onBack} className="absolute left-2 p-1 text-ig-pink">
               <ChevronLeft />
             </button>
           )}
@@ -45,7 +45,7 @@ export function LargeTitle({ title, subtitle, right, onBack }: Props) {
       <div className="px-5 pt-[calc(env(safe-area-inset-top)+8px)]">
         <div className="flex h-11 items-center justify-between">
           {onBack ? (
-            <button onClick={onBack} className="-ml-2 flex items-center font-medium text-orange-500">
+            <button onClick={onBack} className="-ml-2 flex items-center font-medium text-ig-pink">
               <ChevronLeft /> Back
             </button>
           ) : (

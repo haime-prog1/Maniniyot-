@@ -18,7 +18,7 @@ const sizes = {
 
 const variants = {
   glass: 'glass',
-  primary: 'text-white bg-gradient-to-r from-orange-500 to-pink-500 shadow-lg shadow-orange-500/30',
+  primary: 'text-white bg-ig shadow-lg shadow-ig-pink/30',
   danger: 'glass text-red-600 dark:text-red-400',
 };
 

@@ -13,7 +13,7 @@ export function PermissionSheet({ mode, onClose, onContinue }: Props) {
     <BottomSheet open={mode !== null} onClose={onClose} title={mode === 'denied' ? 'Camera is turned off' : 'Use your camera?'}>
       {mode === 'denied' ? (
         <div className="space-y-4 pt-1">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-500">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-ig-pink/15 text-ig-pink">
             <Settings />
           </div>
           <p className="text-[15px]">ShotList can't open the camera because access was denied. To turn it back on:</p>
@@ -36,7 +36,7 @@ export function PermissionSheet({ mode, onClose, onContinue }: Props) {
         </div>
       ) : (
         <div className="space-y-4 pt-1">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-500">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-ig-pink/15 text-ig-pink">
             <Camera />
           </div>
           <p className="text-[15px]">

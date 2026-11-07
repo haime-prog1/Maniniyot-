@@ -3,6 +3,7 @@ import { Eye, Plus } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlassButton, GlassCard, LargeTitle, ProgressRing } from '../../components/ui';
+import { getDestination, gradientCss } from '../../data/destinations';
 import { PHASES, styleLabel, tripLabel } from '../../data/options';
 import { useStore } from '../../store/useStore';
 import { CaptureSheet } from '../capture/CaptureSheet';
@@ -51,24 +52,41 @@ export function ShotListScreen() {
         subtitle={`${styleLabel(list.style)} · ${tripLabel(list.tripType)} · ${list.targetLength}s reel`}
         onBack={() => navigate(-1)}
         right={
-          <button onClick={() => setAddOpen(true)} aria-label="Add custom shot" className="p-1 text-orange-500">
+          <button onClick={() => setAddOpen(true)} aria-label="Add custom shot" className="p-1 text-ig-pink">
             <Plus />
           </button>
         }
       />
 
+      {/* Profile-style header: a progress ring around the destination "avatar", then stats. */}
       <div className="px-4 pt-4">
-        <GlassCard className="flex items-center gap-4 p-4">
-          <ProgressRing value={captured} total={visible.length} size={72} label="Shots captured">
-            <span className="text-[15px] font-bold">{visible.length ? Math.round((captured / visible.length) * 100) : 0}%</span>
+        <div className="flex items-center gap-5">
+          <ProgressRing value={captured} total={visible.length} size={88} stroke={4} label="Shots captured">
+            <span
+              className="block h-[72px] w-[72px] rounded-full"
+              style={{ background: gradientCss(getDestination(list.destinationId)?.gradient ?? ['#fa7e1e', '#d62976', '#962fbf']) }}
+            />
           </ProgressRing>
-          <div className="flex-1">
-            <p className="text-[20px] font-bold">
-              {captured} / {visible.length} shots captured
-            </p>
-            <p className="text-2 text-[13px]">Swipe left to skip · Drag ⋮⋮ to reorder</p>
-          </div>
-        </GlassCard>
+          <dl className="grid flex-1 grid-cols-3 text-center">
+            {[
+              [visible.length, 'shots'],
+              [captured, 'captured'],
+              [`${list.targetLength}s`, 'reel'],
+            ].map(([v, l]) => (
+              <div key={l}>
+                <dd className="text-[19px] font-bold leading-tight">{v}</dd>
+                <dt className="text-[13px]">{l}</dt>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <p className="mt-3 text-[14px] font-semibold">
+          {captured} / {visible.length} shots captured
+        </p>
+        <p className="text-2 text-[13px]">Swipe left to skip · Drag ⋮⋮ to reorder</p>
+        <div className="mt-3 h-1 overflow-hidden rounded-full bg-black/10 dark:bg-white/15" aria-hidden>
+          <div className="h-full rounded-full bg-ig transition-all" style={{ width: `${visible.length ? (captured / visible.length) * 100 : 0}%` }} />
+        </div>
       </div>
 
       {PHASES.map((p) => {

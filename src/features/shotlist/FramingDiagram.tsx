@@ -14,7 +14,7 @@ export function FramingDiagram({ angle, movement, ghost, className }: Props) {
   const W = 90;
   const H = 160;
   const stroke = ghost ? 'white' : 'currentColor';
-  const subject = 'rgba(255,138,61,0.85)';
+  const subject = 'rgba(214,41,118,0.85)';
 
   const figure = (() => {
     switch (angle) {

@@ -23,7 +23,7 @@ export function MyTrips() {
       <div className="space-y-3 px-4 pt-4">
         {lists.length === 0 && (
           <GlassCard className="p-5 text-center">
-            <Map className="mx-auto text-orange-500" />
+            <Map className="mx-auto text-ig-pink" />
             <p className="mt-2 text-[17px] font-semibold">No saved trips</p>
             <p className="text-2 mt-1 text-[14px]">Your shot lists are saved here automatically.</p>
             <GlassButton variant="primary" className="mt-4" onClick={() => openCreate()}>

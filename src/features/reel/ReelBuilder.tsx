@@ -55,7 +55,7 @@ function Clip({ listId, shot, index, start, dur, drop }: { listId: string; shot:
         <p className="text-2 mt-0.5 text-[13px]">
           Use {dur.toFixed(1)}s{shot.transition ? ` · ${shot.transition} out` : ''}
         </p>
-        <p className={cn('mt-1 text-[12px] font-semibold', drop ? 'text-pink-500' : 'text-orange-500')}>
+        <p className={cn('mt-1 text-[12px] font-semibold', drop ? 'text-ig-purple' : 'text-ig-pink')}>
           {drop ? '♫ Beat drop: put your most dynamic shot here' : '♪ Cut on the beat'}
         </p>
       </div>
@@ -77,7 +77,7 @@ export function ReelBuilder() {
         <LargeTitle title="Reel Builder" />
         <div className="px-4 pt-6">
           <GlassCard className="p-5 text-center">
-            <Film className="mx-auto text-orange-500" />
+            <Film className="mx-auto text-ig-pink" />
             <p className="mt-2 text-[17px] font-semibold">No trips yet</p>
             <p className="text-2 mt-1 text-[14px]">Create a shot guide and capture some shots to build your reel timeline.</p>
             <GlassButton variant="primary" className="mt-4" onClick={() => navigate('/')}>
@@ -113,7 +113,7 @@ export function ReelBuilder() {
         <GlassCard className="p-4">
           <div className="flex items-baseline justify-between">
             <p className="text-[17px] font-semibold">Timeline</p>
-            <p className={cn('text-[14px] font-semibold', Math.abs(total - list.targetLength) <= 1 ? 'text-green-500' : 'text-orange-500')}>
+            <p className={cn('text-[14px] font-semibold', Math.abs(total - list.targetLength) <= 1 ? 'text-green-500' : 'text-ig-pink')}>
               {total.toFixed(1)}s / {list.targetLength}s
             </p>
           </div>
@@ -121,7 +121,7 @@ export function ReelBuilder() {
             {captured.map((s, i) => (
               <div
                 key={s.id}
-                className={cn('absolute inset-y-0 border-r-2 border-white/80 dark:border-black/50', i % 2 ? 'bg-orange-400/80' : 'bg-pink-500/75')}
+                className={cn('absolute inset-y-0 border-r-2 border-white/80 dark:border-black/50', i % 2 ? 'bg-ig-orange/80' : 'bg-ig-purple/75')}
                 style={{ left: `${(starts[i] / scale) * 100}%`, width: `${(durs[i] / scale) * 100}%` }}
               />
             ))}
