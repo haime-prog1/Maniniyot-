@@ -20,3 +20,4 @@ dev-dist/
 # ...except the app icons
 !public/icons/
 !public/icons/*.png
+*.tsbuildinfo
