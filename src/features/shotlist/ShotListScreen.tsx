@@ -1,5 +1,5 @@
 import { Reorder } from 'framer-motion';
-import { Eye, Plus } from 'lucide-react';
+import { Eye, Film, Plus, Sparkles } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlassButton, GlassCard, LargeTitle, ProgressRing } from '../../components/ui';
@@ -7,6 +7,7 @@ import { getDestination, gradientCss } from '../../data/destinations';
 import { PHASES, styleLabel, tripLabel } from '../../data/options';
 import { useStore } from '../../store/useStore';
 import { CaptureSheet } from '../capture/CaptureSheet';
+import { LightPlanCard } from '../light/LightPlanCard';
 import { AddShotSheet } from './AddShotSheet';
 import { ShotCard } from './ShotCard';
 import { ShotDetailSheet } from './ShotDetailSheet';
@@ -87,7 +88,17 @@ export function ShotListScreen() {
         <div className="mt-3 h-1 overflow-hidden rounded-full bg-black/10 dark:bg-white/15" aria-hidden>
           <div className="h-full rounded-full bg-ig transition-all" style={{ width: `${visible.length ? (captured / visible.length) * 100 : 0}%` }} />
         </div>
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <GlassButton size="sm" icon={<Sparkles size={15} />} onClick={() => navigate(`/stories/${list.id}`)}>
+            Make a Story
+          </GlassButton>
+          <GlassButton size="sm" icon={<Film size={15} />} onClick={() => navigate('/reel')}>
+            Reel Builder
+          </GlassButton>
+        </div>
       </div>
+
+      <LightPlanCard list={list} onOpenShot={setDetailId} />
 
       {PHASES.map((p) => {
         const shots = visible.filter((s) => s.phase === p.id);

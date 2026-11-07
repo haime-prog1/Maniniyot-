@@ -18,6 +18,7 @@ interface State {
   reorderPhase: (listId: string, phase: Phase, orderedIds: string[]) => void;
   addCustomShot: (listId: string, shot: Omit<ListShot, 'id' | 'order' | 'captured' | 'custom'>) => void;
   setHasMedia: (listId: string, shotId: string, has: boolean) => void;
+  setTripInfo: (listId: string, info: Partial<Pick<ShotList, 'tripDate' | 'coords'>>) => void;
   clearAllMediaFlags: () => void;
   setTheme: (t: ThemePref) => void;
   resetAll: () => void;
@@ -87,6 +88,7 @@ export const useStore = create<State>()(
             captured: has ? true : s.captured,
             mediaRev: (s.mediaRev ?? 0) + 1,
           })),
+        setTripInfo: (listId, info) => updateList(listId, (l) => ({ ...l, ...info })),
         clearAllMediaFlags: () =>
           set((s) => ({ lists: s.lists.map((l) => ({ ...l, shots: l.shots.map((x) => ({ ...x, hasMedia: false })) })) })),
         setTheme: (theme) => set({ theme }),
