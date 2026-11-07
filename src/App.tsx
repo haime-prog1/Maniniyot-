@@ -1,4 +1,4 @@
-import { MotionConfig, motion } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import { useEffect } from 'react';
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Background, TabBar } from './components/ui';
@@ -32,13 +32,11 @@ function AnimatedRoutes() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   return (
-    <motion.main
+    // CSS animation (not JS) so iOS paints the right state from the very first
+    // frame. A JS fade can show one frame at full opacity, then dim, which flickers.
+    <main
       key={location.pathname}
-      // Fade in only: no exit animation, so there's no blank frame between pages.
-      initial={{ opacity: 0.4, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.18, ease: 'easeOut' }}
-      className="relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
+      className="page-enter relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
     >
       <Routes location={location}>
         <Route path="/" element={<HomeScreen />} />
@@ -49,7 +47,7 @@ function AnimatedRoutes() {
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<HomeScreen />} />
       </Routes>
-    </motion.main>
+    </main>
   );
 }
 
