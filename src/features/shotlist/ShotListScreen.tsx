@@ -107,7 +107,7 @@ export function ShotListScreen() {
           <section key={p.id} aria-labelledby={`phase-${p.id}`} className="mt-5">
             <h2
               id={`phase-${p.id}`}
-              className="glass-strong sticky top-[calc(env(safe-area-inset-top)+48px)] z-20 mx-4 mb-2 inline-block rounded-full px-4 py-1.5 text-[13px] font-semibold uppercase tracking-wide"
+              className="sticky top-[calc(env(safe-area-inset-top)+52px)] z-20 mx-4 mb-2 inline-block rounded-full border bg-[var(--bg)] px-4 py-1.5 shadow-sm hairline text-[13px] font-semibold uppercase tracking-wide"
             >
               {p.label} <span className="text-2">· {shots.filter((s) => s.captured).length}/{shots.length}</span>
             </h2>

@@ -1,4 +1,4 @@
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { MotionConfig, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Background, TabBar } from './components/ui';
@@ -9,7 +9,6 @@ import { Settings } from './features/settings/Settings';
 import { ShotListScreen } from './features/shotlist/ShotListScreen';
 import { MyTrips } from './features/trips/MyTrips';
 import { StoryStudio } from './features/stories/StoryStudio';
-import { spring } from './lib/utils';
 import { useStore } from './store/useStore';
 
 function useTheme() {
@@ -33,26 +32,24 @@ function AnimatedRoutes() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.main
-        key={location.pathname}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={spring}
-        className="relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
-      >
-        <Routes location={location}>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/list/:id" element={<ShotListScreen />} />
-          <Route path="/trips" element={<MyTrips />} />
-          <Route path="/stories/:id" element={<StoryStudio />} />
-          <Route path="/reel" element={<ReelBuilder />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="*" element={<HomeScreen />} />
-        </Routes>
-      </motion.main>
-    </AnimatePresence>
+    <motion.main
+      key={location.pathname}
+      // Fade in only: no exit animation, so there's no blank frame between pages.
+      initial={{ opacity: 0.4, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.18, ease: 'easeOut' }}
+      className="relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
+    >
+      <Routes location={location}>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/list/:id" element={<ShotListScreen />} />
+        <Route path="/trips" element={<MyTrips />} />
+        <Route path="/stories/:id" element={<StoryStudio />} />
+        <Route path="/reel" element={<ReelBuilder />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<HomeScreen />} />
+      </Routes>
+    </motion.main>
   );
 }
 
