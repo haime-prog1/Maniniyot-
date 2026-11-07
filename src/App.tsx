@@ -32,11 +32,11 @@ function AnimatedRoutes() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   return (
-    // CSS animation (not JS) so iOS paints the right state from the very first
-    // frame. A JS fade can show one frame at full opacity, then dim, which flickers.
+    // Pages switch instantly, like tabs in Instagram. Any fade or slide here
+    // flickered on iOS.
     <main
       key={location.pathname}
-      className="page-enter relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
+      className="relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
     >
       <Routes location={location}>
         <Route path="/" element={<HomeScreen />} />

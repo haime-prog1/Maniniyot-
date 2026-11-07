@@ -11,6 +11,7 @@
   --glass-border: rgba(219, 219, 219, 0.9);
   --glass-shadow: 0 10px 30px rgba(20, 20, 40, 0.12), 0 2px 6px rgba(20, 20, 40, 0.06);
   --hairline: rgba(0, 0, 0, 0.08);
+  --sheet-bg: #ffffff;
   color-scheme: light;
 }
 
@@ -23,6 +24,7 @@
   --glass-border: rgba(255, 255, 255, 0.12);
   --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
   --hairline: rgba(255, 255, 255, 0.1);
+  --sheet-bg: #1c1c1e;
   color-scheme: dark;
 }
 
@@ -51,6 +53,12 @@ body {
   }
   .glass {
     background: var(--glass-bg);
+  }
+  /* Solid surface for moving panels (sheets): blurring while sliding is janky on iOS. */
+  .sheet {
+    background: var(--sheet-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
   }
   /* Bars, headers and sheets: real frosted glass, on their own GPU layer. */
   .glass-strong {
@@ -99,8 +107,7 @@ body {
   scrollbar-width: none;
 }
 
-/* Pre-blurred radial gradients (no CSS filter) that drift using transform only,
-   so the GPU composites them without repainting. */
+/* Soft, static glow made of plain radial gradients (no CSS filter). */
 .bg-glow {
   position: absolute;
   inset: -25%;
@@ -108,29 +115,17 @@ body {
     radial-gradient(40% 35% at 20% 15%, rgba(250, 126, 30, 0.28), transparent 70%),
     radial-gradient(38% 32% at 85% 45%, rgba(214, 41, 118, 0.24), transparent 70%),
     radial-gradient(45% 38% at 30% 90%, rgba(150, 47, 191, 0.24), transparent 70%);
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-  animation: drift 40s ease-in-out infinite alternate;
+  /* Static on purpose: the tab bar and headers blur what's behind them, and a
+     moving background would force iOS to re-blur every frame (jank and flicker). */
 }
 .dark .bg-glow {
   opacity: 0.8;
 }
 
-/* Page and step transitions. CSS keyframes apply from the first painted frame,
+/* Guide-sheet step transition. CSS keyframes apply from the first painted frame,
    so there is no flash of the final state before the animation starts. */
-.page-enter {
-  animation: page-in 0.2s ease-out both;
-}
 .step-enter {
   animation: step-in 0.22s ease-out both;
-}
-@keyframes page-in {
-  from {
-    transform: translate3d(0, 6px, 0);
-  }
-  to {
-    transform: none;
-  }
 }
 @keyframes step-in {
   from {
@@ -143,18 +138,7 @@ body {
   }
 }
 
-@keyframes drift {
-  from {
-    transform: translate3d(-3%, -2%, 0);
-  }
-  to {
-    transform: translate3d(3%, 2%, 0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .bg-glow,
-  .page-enter,
   .step-enter {
     animation: none;
   }

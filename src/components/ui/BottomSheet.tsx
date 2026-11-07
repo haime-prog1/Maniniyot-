@@ -45,7 +45,7 @@ export function BottomSheet({ open, onClose, title, children, footer }: Props) {
             role="dialog"
             aria-modal="true"
             aria-label={title}
-            className="glass-strong relative flex max-h-[92dvh] w-full max-w-[430px] flex-col rounded-t-[28px] pb-[env(safe-area-inset-bottom)]"
+            className="sheet relative flex max-h-[92dvh] w-full max-w-[430px] flex-col rounded-t-[28px] pb-[env(safe-area-inset-bottom)]"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
