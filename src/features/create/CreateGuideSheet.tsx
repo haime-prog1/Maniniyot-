@@ -1,11 +1,11 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Car, Check, Hotel, Plane, Ship } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomSheet, GlassButton, SegmentedControl } from '../../components/ui';
 import { DESTINATIONS, customDestination, getDestination, gradientCss } from '../../data/destinations';
 import { STYLES, TARGET_LENGTHS, TRIP_TYPES, styleLabel, tripLabel } from '../../data/options';
-import { cn, spring, uid } from '../../lib/utils';
+import { cn, uid } from '../../lib/utils';
 import { generateShotList } from '../../services/generateShotList';
 import { useStore } from '../../store/useStore';
 import { useUI } from '../../store/useUI';
@@ -98,15 +98,8 @@ export function CreateGuideSheet() {
         Step {step + 1} · {STEPS[step]}
       </p>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={step}
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -24 }}
-          transition={spring}
-          className="pt-3"
-        >
+      {/* Keyed CSS slide-in: no exit animation, so the sheet is never blank between steps. */}
+      <div key={step} className="step-enter pt-3">
           {step === 0 && (
             <div className="space-y-3">
               <h3 className="text-[22px] font-bold">Where are you going?</h3>
@@ -188,8 +181,7 @@ export function CreateGuideSheet() {
               </div>
             </div>
           )}
-        </motion.div>
-      </AnimatePresence>
+      </div>
     </BottomSheet>
   );
 }

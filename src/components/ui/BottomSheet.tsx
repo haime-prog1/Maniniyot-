@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useDragControls } from 'framer-motion';
+import { AnimatePresence, PresenceContext, motion, useDragControls } from 'framer-motion';
 import { useEffect, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
@@ -45,7 +45,7 @@ export function BottomSheet({ open, onClose, title, children, footer }: Props) {
             role="dialog"
             aria-modal="true"
             aria-label={title}
-            className="glass-strong relative flex max-h-[92dvh] w-full max-w-[430px] flex-col rounded-t-[28px] pb-[env(safe-area-inset-bottom)]"
+            className="sheet relative flex max-h-[92dvh] w-full max-w-[430px] flex-col rounded-t-[28px] pb-[env(safe-area-inset-bottom)]"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
@@ -74,8 +74,13 @@ export function BottomSheet({ open, onClose, title, children, footer }: Props) {
                 </div>
               )}
             </div>
-            <div className="overflow-y-auto overscroll-contain px-5 pb-5">{children}</div>
-            {footer && <div className="px-5 pb-4 pt-2">{footer}</div>}
+            {/* Isolate the content from the sheet's exit animation. Otherwise an animated
+                element inside (like a segmented control's sliding highlight) can block
+                the sheet from being removed, leaving an invisible layer that eats taps. */}
+            <PresenceContext.Provider value={null}>
+              <div className="overflow-y-auto overscroll-contain px-5 pb-5">{children}</div>
+              {footer && <div className="px-5 pb-4 pt-2">{footer}</div>}
+            </PresenceContext.Provider>
           </motion.div>
         </div>
       )}

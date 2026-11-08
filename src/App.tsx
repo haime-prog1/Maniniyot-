@@ -1,4 +1,4 @@
-import { MotionConfig, motion } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import { useEffect } from 'react';
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Background, TabBar } from './components/ui';
@@ -32,12 +32,10 @@ function AnimatedRoutes() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   return (
-    <motion.main
+    // Pages switch instantly, like tabs in Instagram. Any fade or slide here
+    // flickered on iOS.
+    <main
       key={location.pathname}
-      // Fade in only: no exit animation, so there's no blank frame between pages.
-      initial={{ opacity: 0.4, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.18, ease: 'easeOut' }}
       className="relative z-10 mx-auto min-h-[100dvh] max-w-[430px] pb-[calc(env(safe-area-inset-bottom)+80px)]"
     >
       <Routes location={location}>
@@ -49,7 +47,7 @@ function AnimatedRoutes() {
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<HomeScreen />} />
       </Routes>
-    </motion.main>
+    </main>
   );
 }
 
