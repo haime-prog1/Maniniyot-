@@ -2,7 +2,7 @@ import { ClipboardCopy, Lightbulb, Share2 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlassButton, LargeTitle, SegmentedControl } from '../../components/ui';
-import { buildScript, factLabel, SCRIPT_LANGS, scriptToText } from '../../data/script';
+import { buildScript, factLabel, SCRIPT_LANGS, SCRIPT_LENGTHS, scriptToText } from '../../data/script';
 import { cn } from '../../lib/utils';
 import { useStore } from '../../store/useStore';
 
@@ -13,6 +13,8 @@ export function ScriptScreen() {
   const list = useStore((s) => s.lists.find((l) => l.id === id));
   const lang = useStore((s) => s.scriptLang);
   const setLang = useStore((s) => s.setScriptLang);
+  const length = useStore((s) => s.scriptLength);
+  const setLength = useStore((s) => s.setScriptLength);
   const [status, setStatus] = useState<string | null>(null);
 
   if (!list) {
@@ -26,7 +28,7 @@ export function ScriptScreen() {
     );
   }
 
-  const entries = buildScript(list, lang);
+  const entries = buildScript(list, lang, length);
   const facts = entries.filter((e) => e.fact).length;
 
   const flash = (m: string) => {
@@ -35,7 +37,7 @@ export function ScriptScreen() {
   };
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(scriptToText(list, lang));
+      await navigator.clipboard.writeText(scriptToText(list, lang, length));
       flash('Copied');
     } catch {
       flash('Copy failed');
@@ -44,7 +46,7 @@ export function ScriptScreen() {
   const share = async () => {
     if (!navigator.share) return copy();
     try {
-      await navigator.share({ title: `Vlog script: ${list.destinationName}`, text: scriptToText(list, lang) });
+      await navigator.share({ title: `Vlog script: ${list.destinationName}`, text: scriptToText(list, lang, length) });
     } catch {
       /* cancelled */
     }
@@ -52,10 +54,11 @@ export function ScriptScreen() {
 
   return (
     <div>
-      <LargeTitle title="Vlog Script" subtitle={`${list.destinationName} · one short line per shot`} onBack={() => navigate(-1)} />
+      <LargeTitle title="Vlog Script" subtitle={`${list.destinationName} · a spiel for every shot`} onBack={() => navigate(-1)} />
 
       <div className="space-y-3 px-4 pt-4">
         <SegmentedControl label="Script language" options={SCRIPT_LANGS} value={lang} onChange={setLang} />
+        <SegmentedControl label="Script length" options={SCRIPT_LENGTHS} value={length} onChange={setLength} />
         <p className="text-2 px-1 text-[13px]">
           Say each line to the camera or use it as a voice-over or caption.
           {facts > 0 ? ` ${facts} shots come with a fact about ${list.destinationName} you can add.` : ''}

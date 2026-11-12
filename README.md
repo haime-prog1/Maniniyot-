@@ -31,7 +31,7 @@ The in-app camera needs HTTPS (or `localhost`).
 - **Shot Detail**: a rule-of-thirds framing diagram, camera settings, the tip, the transition, notes and capture.
 - **Capture**: use the native iPhone Camera, or Quick Capture in-app with a thirds grid, a ghost framing overlay, a countdown and a front/back camera toggle.
 - **Insta360 Ace Pro 2 mode**: pick the camera in Settings or when creating a guide. Shot details then show Ace Pro 2 settings (mode, stabilisation, field of view, mounting), new guides add action-cam shots (underwater, chest-mount POV, selfie-stick follow, TimeShift), and Capture can import clips exported from the Insta360 app.
-- **Vlog Script**: a short line to say for each shot, in Taglish or Tagalog, with facts about the destination (Boracay has 13). Open it from the trip screen, copy or share it, and see each line under "Say this" in Shot Detail.
+- **Vlog Script**: a spiel to say for each shot (short or long), in Taglish or Tagalog, with facts about the destination (Boracay has 13). Open it from the trip screen, copy or share it, and see each line under "Say this" in Shot Detail.
 - **Reel Builder**: captured clips in order, with durations fitted to your target length, beat-snapped cuts, a beat-drop marker and a CapCut/VN checklist.
 - **My Trips**: open, duplicate or delete trips.
 - **Settings**: theme, export as text (copy or share), storage usage, delete all media, and reset.
