@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { PHASE_ORDER } from '../data/options';
+import type { ScriptLang } from '../data/script';
 import { uid } from '../lib/utils';
 import type { CameraPref, ListShot, Phase, ShotList, ThemePref } from '../types';
 
@@ -9,6 +10,8 @@ interface State {
   activeListId?: string;
   theme: ThemePref;
   camera: CameraPref;
+  scriptLang: ScriptLang;
+  setScriptLang: (l: ScriptLang) => void;
   setCamera: (c: CameraPref) => void;
   addList: (list: ShotList) => void;
   deleteList: (id: string) => void;
@@ -44,6 +47,8 @@ export const useStore = create<State>()(
         activeListId: undefined,
         theme: 'system',
         camera: 'phone',
+        scriptLang: 'taglish',
+        setScriptLang: (scriptLang) => set({ scriptLang }),
         setCamera: (camera) => set({ camera }),
         addList: (list) => set((s) => ({ lists: [list, ...s.lists], activeListId: list.id })),
         deleteList: (id) =>

@@ -8,6 +8,7 @@ import { ReelBuilder } from './features/reel/ReelBuilder';
 import { Settings } from './features/settings/Settings';
 import { ShotListScreen } from './features/shotlist/ShotListScreen';
 import { MyTrips } from './features/trips/MyTrips';
+import { ScriptScreen } from './features/script/ScriptScreen';
 import { StoryStudio } from './features/stories/StoryStudio';
 import { useStore } from './store/useStore';
 
@@ -43,6 +44,7 @@ function AnimatedRoutes() {
         <Route path="/list/:id" element={<ShotListScreen />} />
         <Route path="/trips" element={<MyTrips />} />
         <Route path="/stories/:id" element={<StoryStudio />} />
+        <Route path="/script/:id" element={<ScriptScreen />} />
         <Route path="/reel" element={<ReelBuilder />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<HomeScreen />} />
