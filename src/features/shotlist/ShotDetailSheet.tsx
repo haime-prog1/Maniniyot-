@@ -2,6 +2,7 @@ import { ArrowRightLeft, Lightbulb } from 'lucide-react';
 import { BottomSheet, ListGroup, ListRow, Toggle } from '../../components/ui';
 import { cameraLabel, cameraSettingsFor } from '../../data/cameraSettings';
 import { phaseLabel } from '../../data/options';
+import { factLabel, scriptFor } from '../../data/script';
 import { formatRange } from '../../lib/utils';
 import { useStore } from '../../store/useStore';
 import type { ListShot } from '../../types';
@@ -18,6 +19,9 @@ export function ShotDetailSheet({ listId, shot, onClose }: Props) {
   const setNotes = useStore((s) => s.setNotes);
   const toggle = useStore((s) => s.toggleCaptured);
   const camera = useStore((s) => s.camera);
+  const lang = useStore((s) => s.scriptLang);
+  const list = useStore((s) => s.lists.find((l) => l.id === listId));
+  const say: { line?: string; fact?: string } = shot && list ? scriptFor(shot, list, lang) : {};
 
   return (
     <BottomSheet open={!!shot} onClose={onClose} title={shot?.title}>
@@ -55,6 +59,18 @@ export function ShotDetailSheet({ listId, shot, onClose }: Props) {
               </p>
             )}
           </div>
+
+          {(say.line || say.fact) && (
+            <div className="rounded-2xl bg-ig-pink/10 p-4 text-[14px]">
+              <p className="text-[12px] font-semibold uppercase tracking-wide text-ig-pink">Say this</p>
+              {say.line && <p className="mt-1 text-[17px] font-semibold leading-snug">“{say.line}”</p>}
+              {say.fact && (
+                <p className="mt-2 leading-snug">
+                  <b>{factLabel(lang)}</b> {say.fact}
+                </p>
+              )}
+            </div>
+          )}
 
           <ListGroup title={`${cameraLabel(camera)} settings`}>
             {cameraSettingsFor(shot, camera).map((r) => (
