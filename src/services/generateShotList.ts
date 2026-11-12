@@ -1,12 +1,14 @@
-import { DESTINATION_SHOTS, GENERIC_SHOTS } from '../data/shots';
+import { ACTION_SHOTS, DESTINATION_SHOTS, GENERIC_SHOTS } from '../data/shots';
 import { PHASE_ORDER } from '../data/options';
-import type { Destination, ListShot, Phase, Shot, Style, TargetLength, TripType } from '../types';
+import type { CameraPref, Destination, ListShot, Phase, Shot, Style, TargetLength, TripType } from '../types';
 
 export interface GenerateInput {
   destination: Destination;
   style: Style;
   tripType: TripType;
   targetLength: TargetLength;
+  /** An action camera adds bonus shots (underwater, chest mount, selfie stick…). */
+  camera?: CameraPref;
 }
 
 /** Approximate number of shots that fit each reel length. */
@@ -27,7 +29,7 @@ export async function generateShotList(input: GenerateInput): Promise<ListShot[]
   return buildLocalShotList(input);
 }
 
-export function buildLocalShotList({ destination, style, tripType, targetLength }: GenerateInput): ListShot[] {
+export function buildLocalShotList({ destination, style, tripType, targetLength, camera }: GenerateInput): ListShot[] {
   const generic = GENERIC_SHOTS.filter((s) => s.styles.includes(style) && s.tripTypes.includes(tripType));
   const specific = DESTINATION_SHOTS.filter(
     (s) => s.destinationSpecific === destination.id && s.tripTypes.includes(tripType),
@@ -59,7 +61,14 @@ export function buildLocalShotList({ destination, style, tripType, targetLength 
     }
   }
 
-  const pool = [...generic, ...specific];
+  // Action-camera bonus shots, on top of the normal budget.
+  const action =
+    camera === 'acepro2'
+      ? ACTION_SHOTS.filter((s) => s.styles.includes(style) && s.tripTypes.includes(tripType)).slice(0, targetLength <= 15 ? 3 : 6)
+      : [];
+  for (const s of action) chosen.add(s.id);
+
+  const pool = [...generic, ...action, ...specific];
   const picked = pool
     .filter((s) => chosen.has(s.id))
     .sort(

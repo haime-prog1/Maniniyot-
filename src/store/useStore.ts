@@ -2,12 +2,14 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { PHASE_ORDER } from '../data/options';
 import { uid } from '../lib/utils';
-import type { ListShot, Phase, ShotList, ThemePref } from '../types';
+import type { CameraPref, ListShot, Phase, ShotList, ThemePref } from '../types';
 
 interface State {
   lists: ShotList[];
   activeListId?: string;
   theme: ThemePref;
+  camera: CameraPref;
+  setCamera: (c: CameraPref) => void;
   addList: (list: ShotList) => void;
   deleteList: (id: string) => void;
   duplicateList: (id: string) => string | undefined;
@@ -41,6 +43,8 @@ export const useStore = create<State>()(
         lists: [],
         activeListId: undefined,
         theme: 'system',
+        camera: 'phone',
+        setCamera: (camera) => set({ camera }),
         addList: (list) => set((s) => ({ lists: [list, ...s.lists], activeListId: list.id })),
         deleteList: (id) =>
           set((s) => ({
@@ -92,7 +96,7 @@ export const useStore = create<State>()(
         clearAllMediaFlags: () =>
           set((s) => ({ lists: s.lists.map((l) => ({ ...l, shots: l.shots.map((x) => ({ ...x, hasMedia: false })) })) })),
         setTheme: (theme) => set({ theme }),
-        resetAll: () => set({ lists: [], activeListId: undefined, theme: 'system' }),
+        resetAll: () => set({ lists: [], activeListId: undefined, theme: 'system', camera: 'phone' }),
       };
     },
     { name: 'shotlist-store', version: 1, storage: createJSONStorage(() => localStorage) },

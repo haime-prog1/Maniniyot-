@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { Camera, Lock, RefreshCcw, Share, Trash2, Video } from 'lucide-react';
+import { Camera, Download, Lock, RefreshCcw, Share, Trash2, Video } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
 import { GlassButton, buttonClass } from '../../components/ui';
 import { cn } from '../../lib/utils';
@@ -26,6 +26,7 @@ interface Props {
 /** Capture options plus a preview, share, replace and delete for one shot. */
 export function CapturePanel({ listId, shot, onSaved }: Props) {
   const setHasMedia = useStore((s) => s.setHasMedia);
+  const userCamera = useStore((s) => s.camera);
   const { url, record } = useShotMedia(listId, shot.id, shot.hasMedia, shot.mediaRev);
   const fileRef = useRef<HTMLInputElement>(null);
   const [camera, setCamera] = useState(false);
@@ -82,18 +83,46 @@ export function CapturePanel({ listId, shot, onSaved }: Props) {
     }
   };
 
-  const options = (
-    <div className="grid grid-cols-1 gap-2">
-      <label className={cn(buttonClass('primary', 'lg', true), 'cursor-pointer', busy && 'pointer-events-none opacity-50')}>
-        <Camera size={20} /> Use iPhone Camera
-        <input ref={fileRef} type="file" accept="video/*,image/*" capture="environment" className="sr-only" onChange={onFile} />
-      </label>
-      <p className="text-2 -mt-1 text-center text-[12px]">Recommended: full 4K, stabilisation and slo-mo</p>
-      <GlassButton size="lg" full icon={<Video size={20} />} onClick={startQuick} disabled={busy}>
-        Quick Capture (in-app)
-      </GlassButton>
-    </div>
-  );
+  const importInput = <input type="file" accept="video/*,image/*" className="sr-only" onChange={onFile} />;
+  const nativeInput = <input ref={fileRef} type="file" accept="video/*,image/*" capture="environment" className="sr-only" onChange={onFile} />;
+  const labelClass = (variant: 'primary' | 'glass') => cn(buttonClass(variant, 'lg', true), 'cursor-pointer', busy && 'pointer-events-none opacity-50');
+
+  const options =
+    userCamera === 'acepro2' ? (
+      <div className="grid grid-cols-1 gap-2">
+        <label className={labelClass('primary')}>
+          <Download size={20} /> Import Ace Pro 2 clip
+          {importInput}
+        </label>
+        <ol className="text-2 -mt-1 list-decimal space-y-0.5 pl-6 text-[12px]">
+          <li>Film the shot on your Ace Pro 2.</li>
+          <li>In the Insta360 app, download the clip and export it to Photos.</li>
+          <li>Tap Import and pick it from your Photo Library.</li>
+        </ol>
+        <label className={labelClass('glass')}>
+          <Camera size={20} /> Use iPhone Camera
+          {nativeInput}
+        </label>
+        <GlassButton size="lg" full icon={<Video size={20} />} onClick={startQuick} disabled={busy}>
+          Quick Capture (in-app)
+        </GlassButton>
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 gap-2">
+        <label className={labelClass('primary')}>
+          <Camera size={20} /> Use iPhone Camera
+          {nativeInput}
+        </label>
+        <p className="text-2 -mt-1 text-center text-[12px]">Recommended: full 4K, stabilisation and slo-mo</p>
+        <GlassButton size="lg" full icon={<Video size={20} />} onClick={startQuick} disabled={busy}>
+          Quick Capture (in-app)
+        </GlassButton>
+        <label className={labelClass('glass')}>
+          <Download size={20} /> Choose from Photos
+          {importInput}
+        </label>
+      </div>
+    );
 
   return (
     <div className="space-y-3">
