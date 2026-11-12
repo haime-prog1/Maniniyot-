@@ -5,10 +5,11 @@ import { formatBytes } from '../../lib/utils';
 import { shotListToText } from '../../services/exportText';
 import { deleteAllMedia, mediaUsage } from '../../services/mediaStore';
 import { useActiveList, useStore } from '../../store/useStore';
-import type { ThemePref } from '../../types';
+import { CAMERAS } from '../../data/cameraSettings';
+import type { CameraPref, ThemePref } from '../../types';
 
 export function Settings() {
-  const { theme, setTheme, lists, clearAllMediaFlags, resetAll } = useStore();
+  const { theme, setTheme, camera, setCamera, lists, clearAllMediaFlags, resetAll } = useStore();
   const active = useActiveList();
   const [exportId, setExportId] = useState(active?.id);
   const [usage, setUsage] = useState<{ count: number; bytes: number }>({ count: 0, bytes: 0 });
@@ -90,6 +91,19 @@ export function Settings() {
                 { value: 'dark', label: 'Dark' },
               ]}
             />
+          </div>
+        </ListGroup>
+
+        <ListGroup
+          title="Camera"
+          footer={
+            camera === 'acepro2'
+              ? 'Shot details show Insta360 Ace Pro 2 settings (mode, stabilisation, field of view, mounting). New guides add action-cam shots, and Capture lets you import clips from the camera.'
+              : 'Shot details show iPhone camera settings.'
+          }
+        >
+          <div className="p-3">
+            <SegmentedControl<CameraPref> label="Camera" value={camera} onChange={setCamera} options={CAMERAS} />
           </div>
         </ListGroup>
 

@@ -18,7 +18,8 @@ type Row = [
   trips: TripType[] | 'all',
 ];
 
-const toShot = (r: Row, destinationSpecific?: string): Shot => ({
+const toShot = (r: Row, destinationSpecific?: string, gear?: 'action'): Shot => ({
+  gear,
   id: r[0],
   phase: r[1],
   title: r[2],
@@ -142,7 +143,18 @@ const SPECIFIC: Record<string, Row[]> = {
   ],
 };
 
+/** Bonus shots that need an action camera (waterproof, wide and mountable). */
+const ACTION: Row[] = [
+  ['a-flip', 'departure', 'Flip-screen intro', 'Flip the screen up, hold the camera at arm\'s length and say where you\'re going.', [2, 4], 'Medium', 'Static', 'Look at the lens, not at yourself on the screen.', 'Whip pan', [V, F, B, CP], 'all'],
+  ['a-stick', 'arrival', 'Selfie-stick follow shot', 'Hold the selfie stick high and slightly behind you as you walk into {destination}, for a third-person view.', [3, 4], 'Wide', 'Walk-forward', 'Extend the stick fully and keep your arm still. The stabilisation does the rest.', undefined, 'all', 'all'],
+  ['a-chest', 'activities', 'Chest-mount POV', 'Mount the camera on your chest for a hands-free POV of the main activity.', [3, 5], 'POV', 'Walk-forward', 'Tilt the camera up a little. Chest mounts tend to point at the ground.', undefined, 'all', 'all'],
+  ['a-underwater', 'activities', 'Underwater shot', 'Dip the camera under the surface: fish, coral, or friends swimming past.', [3, 5], 'Wide', 'Slow-mo', 'It is waterproof to 12 m without a case. Lock the screen first, and rinse it in fresh water afterwards.', 'Water wipe', 'all', 'all'],
+  ['a-plunge', 'activities', 'Jump-in plunge', 'Hold the camera and jump into the water, filming the splash from above to below the surface.', [2, 3], 'POV', 'Slow-mo', 'Use a floating hand grip or wrist strap so the camera cannot sink.', 'Water wipe', [F, B, CP, V, C], 'all'],
+  ['a-timeshift', 'activities', 'TimeShift walk-through', 'Walk through a busy street, market or beach path with TimeShift running.', [3, 4], 'Wide', 'Hyperlapse', 'Walk at a steady pace and keep the camera pointed at one spot ahead.', 'Speed ramp', 'all', 'all'],
+];
+
 export const GENERIC_SHOTS: Shot[] = GENERIC.map((r) => toShot(r));
+export const ACTION_SHOTS: Shot[] = ACTION.map((r) => toShot(r, undefined, 'action'));
 export const DESTINATION_SHOTS: Shot[] = Object.entries(SPECIFIC).flatMap(([dest, rows]) =>
   rows.map((r) => toShot(r, dest)),
 );

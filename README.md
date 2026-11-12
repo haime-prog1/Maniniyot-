@@ -30,6 +30,7 @@ The in-app camera needs HTTPS (or `localhost`).
 - **Shot List**: shots grouped by trip phase with sticky headers and a progress ring. Each shot has a captured check, swipe-left to skip, drag to reorder, and you can add custom shots.
 - **Shot Detail**: a rule-of-thirds framing diagram, camera settings, the tip, the transition, notes and capture.
 - **Capture**: use the native iPhone Camera, or Quick Capture in-app with a thirds grid, a ghost framing overlay, a countdown and a front/back camera toggle.
+- **Insta360 Ace Pro 2 mode**: pick the camera in Settings or when creating a guide. Shot details then show Ace Pro 2 settings (mode, stabilisation, field of view, mounting), new guides add action-cam shots (underwater, chest-mount POV, selfie-stick follow, TimeShift), and Capture can import clips exported from the Insta360 app.
 - **Reel Builder**: captured clips in order, with durations fitted to your target length, beat-snapped cuts, a beat-drop marker and a CapCut/VN checklist.
 - **My Trips**: open, duplicate or delete trips.
 - **Settings**: theme, export as text (copy or share), storage usage, delete all media, and reset.

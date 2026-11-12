@@ -125,6 +125,7 @@ export function ShotCard({ listId, shot, number, onOpen, onCapture }: Props) {
             <Move size={12} /> {shot.movement}
           </span>
           {shot.custom && <span className="chip">Custom</span>}
+          {shot.gear === 'action' && <span className="chip text-ig-pink">Action cam</span>}
         </div>
 
         <p className="mt-3 flex gap-2 text-[13px] leading-snug">

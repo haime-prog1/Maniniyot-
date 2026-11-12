@@ -1,6 +1,6 @@
 import { ArrowRightLeft, Lightbulb } from 'lucide-react';
 import { BottomSheet, ListGroup, ListRow, Toggle } from '../../components/ui';
-import { cameraSettingsFor } from '../../data/cameraSettings';
+import { cameraLabel, cameraSettingsFor } from '../../data/cameraSettings';
 import { phaseLabel } from '../../data/options';
 import { formatRange } from '../../lib/utils';
 import { useStore } from '../../store/useStore';
@@ -17,6 +17,7 @@ interface Props {
 export function ShotDetailSheet({ listId, shot, onClose }: Props) {
   const setNotes = useStore((s) => s.setNotes);
   const toggle = useStore((s) => s.toggleCaptured);
+  const camera = useStore((s) => s.camera);
 
   return (
     <BottomSheet open={!!shot} onClose={onClose} title={shot?.title}>
@@ -55,8 +56,8 @@ export function ShotDetailSheet({ listId, shot, onClose }: Props) {
             )}
           </div>
 
-          <ListGroup title="Recommended camera settings">
-            {cameraSettingsFor(shot).map((r) => (
+          <ListGroup title={`${cameraLabel(camera)} settings`}>
+            {cameraSettingsFor(shot, camera).map((r) => (
               <ListRow key={r.label} label={<span className="text-[14px]">{r.label}</span>} detail={<span className="text-[13px]">{r.value}</span>} />
             ))}
             <ListRow label="Captured" right={<Toggle checked={shot.captured} onChange={(v) => toggle(listId, shot.id, v)} label="Captured" />} />

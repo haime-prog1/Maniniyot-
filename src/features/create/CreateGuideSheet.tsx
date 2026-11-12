@@ -3,6 +3,7 @@ import { Car, Check, Hotel, Plane, Ship } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomSheet, GlassButton, SegmentedControl } from '../../components/ui';
+import { CAMERAS } from '../../data/cameraSettings';
 import { DESTINATIONS, customDestination, getDestination, gradientCss } from '../../data/destinations';
 import { STYLES, TARGET_LENGTHS, TRIP_TYPES, styleLabel, tripLabel } from '../../data/options';
 import { cn, uid } from '../../lib/utils';
@@ -17,6 +18,8 @@ const STEPS = ['Destination', 'Trip type', 'Reel style', 'Reel length'];
 export function CreateGuideSheet() {
   const { createOpen, presetDestinationId, closeCreate } = useUI();
   const addList = useStore((s) => s.addList);
+  const camera = useStore((s) => s.camera);
+  const setCamera = useStore((s) => s.setCamera);
   const navigate = useNavigate();
 
   const [step, setStep] = useState(0);
@@ -48,7 +51,7 @@ export function CreateGuideSheet() {
   const generate = async () => {
     if (!destination) return;
     setBusy(true);
-    const shots = await generateShotList({ destination, style, tripType: trip, targetLength: length });
+    const shots = await generateShotList({ destination, style, tripType: trip, targetLength: length, camera });
     const id = uid();
     addList({
       id,
@@ -173,6 +176,13 @@ export function CreateGuideSheet() {
                 value={length}
                 onChange={setLength}
               />
+              <div>
+                <p className="text-2 mb-1.5 px-1 text-[13px] font-medium">Filming with</p>
+                <SegmentedControl label="Camera" options={CAMERAS} value={camera} onChange={setCamera} />
+                {camera === 'acepro2' && (
+                  <p className="text-2 mt-1.5 px-1 text-[12px]">Adds action-cam shots like underwater and chest-mount POV, plus Ace Pro 2 settings for every shot.</p>
+                )}
+              </div>
               <div className="glass rounded-2xl p-4 text-[15px]">
                 <p className="font-semibold">{destination?.name ?? 'Your destination'}</p>
                 <p className="text-2 text-[14px]">

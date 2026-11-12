@@ -45,6 +45,8 @@ export interface Shot {
   transition?: string;
   styles: Style[];
   tripTypes: TripType[];
+  /** Set when the shot needs an action camera (waterproof, wide, mountable). */
+  gear?: 'action';
   /** Destination id when the shot only applies to one place. */
   destinationSpecific?: string;
 }
@@ -77,3 +79,6 @@ export interface ShotList {
 }
 
 export type ThemePref = 'system' | 'light' | 'dark';
+
+/** The camera the user films with. It changes settings advice, import options and bonus shots. */
+export type CameraPref = 'phone' | 'acepro2';
