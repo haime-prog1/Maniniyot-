@@ -93,6 +93,13 @@ export function ScriptScreen() {
           </li>
         ))}
       </ol>
+
+      {list.destinationId === 'boracay' && (
+        <p className="text-2 px-6 pb-2 pt-4 text-center text-[12px]">
+          Boracay facts were checked in November 2026 against news reports, government documents and encyclopedias. Rules can change, so check the
+          latest before you post.
+        </p>
+      )}
     </div>
   );
 }

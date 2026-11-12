@@ -85,53 +85,65 @@ const LINES: Record<string, Line> = {
 };
 
 /** Short facts to drop into the vlog, keyed by destination id, then shot id. */
+/**
+ * Short facts to drop into the vlog, keyed by destination id, then shot id.
+ * Boracay facts were checked in November 2026 against news reports, government
+ * documents and encyclopedias. Contested claims are worded as such.
+ */
 const FACTS: Record<string, Record<string, Line>> = {
   boracay: {
     'g-airport': L(
-      'Ang airport ay ipinangalan kay Godofredo P. Ramos, na tinawag na "Father of Aklan".',
-      'Ipinangalan ang paliparan kay Godofredo P. Ramos, na tinaguriang "Ama ng Aklan".',
+      'Ipinangalan ang airport kay Godofredo P. Ramos, ang congressman na nag-author ng batas na naghiwalay sa Aklan mula sa Capiz.',
+      'Ipinangalan ang paliparan kay Godofredo P. Ramos, ang kongresistang may-akda ng batas na naghiwalay sa Aklan mula sa Capiz.',
     ),
     'bor-jetty': L(
       'Mga 7 kilometers lang ang haba ng Boracay. Maliit, pero world-famous.',
       'Mga 7 kilometro lang ang haba ng Boracay. Maliit, pero kilala sa buong mundo.',
     ),
     'g-feet': L(
-      'Sabi ng ilan, galing ang "Boracay" sa salitang "borac" na ibig sabihin ay bulak, dahil sa puting buhangin.',
+      'Ayon sa mga Ati, galing ang "Boracay" sa "bora" (bula) at "bocay" (puti). Isa lang \'yan sa ilang kuwento tungkol sa pangalan.',
+      'Ayon sa mga Ati, galing ang "Boracay" sa "bora" (bula) at "bocay" (puti). Isa lamang iyan sa ilang kuwento tungkol sa pangalan.',
     ),
     'bor-white': L('Mga 4 kilometers ang haba ng White Beach.', 'Mga 4 na kilometro ang haba ng White Beach.'),
     'bor-stations': L(
-      'Ang "Station" ay galing sa mga dating babaan ng bangka dito sa beach.',
-      'Ang "Station" ay galing sa mga dating babaan ng bangka rito sa dalampasigan.',
+      'Ang Station 1, 2 at 3 ay mga dating boat station sa White Beach. Iisang beach lang sila, walang harang sa pagitan.',
+      'Ang Station 1, 2 at 3 ay mga dating himpilan ng bangka sa White Beach. Iisang dalampasigan lang sila, walang harang sa pagitan.',
     ),
     'bor-puka': L(
-      'Ipinangalan ito sa puka shells. Sumikat ang puka shell necklace noong 1970s.',
-      'Ipinangalan ito sa mga kabibeng puka. Sumikat ang kuwintas na puka noong dekada 70.',
+      'Ang "puka" ay \'yung butas sa gitna ng kabibe. Bawal nang iuwi ang shells dito, kaya picture na lang.',
+      'Ang "puka" ay ang butas sa gitna ng kabibe. Bawal nang iuwi ang mga kabibe rito, kaya litrato na lang.',
     ),
     'bor-willys': L(
       'May grotto ng Birheng Maria sa ibabaw ng bato. Kapag low tide, puwede mo itong lakarin.',
       'May grotto ng Birheng Maria sa ibabaw ng bato. Kapag kati ang dagat, puwede mo itong lakarin.',
     ),
     'bor-luho': L(
-      'Ito ang pinakamataas na bahagi ng isla, mga 100 meters above sea level.',
-      'Ito ang pinakamataas na bahagi ng isla, mga 100 metro mula sa dagat.',
+      'Ito ang pinakamataas na bahagi ng isla, mahigit 100 meters above sea level.',
+      'Ito ang pinakamataas na bahagi ng isla, mahigit 100 metro mula sa dagat.',
     ),
     'bor-hopping': L(
-      'Bago pa dumating ang mga turista, ang mga Ati ang unang nanirahan sa Boracay.',
+      'Bago pa dumating ang mga Espanyol, ang mga Ati na ang nakatira sa Boracay.',
+      'Bago pa dumating ang mga Espanyol, ang mga Ati na ang naninirahan sa Boracay.',
     ),
     'bor-paraw': L(
-      'Ang paraw ay traditional na bangka ng Visayas na may dalawang katig.',
-      'Ang paraw ay tradisyonal na bangka ng Visayas na may dalawang katig.',
+      'Ang paraw ay traditional na bangka ng Visayas na may dalawang katig. Dati, pangisda at pang-transport ito bago naging pang-turista.',
+      'Ang paraw ay tradisyonal na bangka ng Visayas na may dalawang katig. Dati, ginagamit ito sa pangingisda at paghahatid bago naging pang-turista.',
+    ),
+    'bor-dmall': L(
+      '"Boracay" ang itawag, hindi "Bora". Noong 2011, nagpasa pa ang bayan ng Malay ng resolusyon laban sa paggamit ng "Bora" sa mga negosyo.',
+      '"Boracay" ang itawag, hindi "Bora". Noong 2011, nagpasa pa ang bayan ng Malay ng resolusyon laban sa paggamit ng "Bora" sa mga negosyo.',
     ),
     'g-silhouette': L(
-      'Bawal uminom at manigarilyo sa mismong beach. Sunset na lang ang lalanghapin mo.',
-      'Bawal uminom at manigarilyo sa mismong dalampasigan. Ang paglubog ng araw na lang ang lalanghapin mo.',
+      'Mula nang i-reopen noong 2018, bawal na ang pag-inom at paninigarilyo sa mismong beach. Sunset na lang ang lalanghapin mo.',
+      'Mula nang muling buksan noong 2018, bawal na ang pag-inom at paninigarilyo sa mismong dalampasigan. Ang paglubog ng araw na lang ang lalanghapin mo.',
     ),
     'bor-fire': L(
-      'Ang poi, \'yung pinaiikot na apoy, ay galing sa mga Māori ng New Zealand.',
-      'Ang poi, iyong pinaiikot na apoy, ay galing sa mga Māori ng New Zealand.',
+      'Ang poi, \'yung pinaiikot na bola, ay galing sa mga Māori ng New Zealand. \'Yung may apoy, modern version na.',
+      'Ang poi, iyong pinaiikot na bola, ay galing sa mga Māori ng New Zealand. Ang may apoy ay makabagong bersyon na.',
     ),
     'g-ending': L(
-      'Noong 2018, isinara ang Boracay nang anim na buwan para linisin. Kaya ingatan natin.',
+      'Noong April hanggang October 2018, isinara ang Boracay nang mga anim na buwan para linisin. Kaya ingatan natin.',
+      'Mula Abril hanggang Oktubre 2018, isinara ang Boracay nang mga anim na buwan para linisin. Kaya ingatan natin.',
     ),
   },
 };
