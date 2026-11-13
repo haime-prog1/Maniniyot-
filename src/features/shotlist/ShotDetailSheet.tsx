@@ -20,8 +20,9 @@ export function ShotDetailSheet({ listId, shot, onClose }: Props) {
   const toggle = useStore((s) => s.toggleCaptured);
   const camera = useStore((s) => s.camera);
   const lang = useStore((s) => s.scriptLang);
+  const length = useStore((s) => s.scriptLength);
   const list = useStore((s) => s.lists.find((l) => l.id === listId));
-  const say: { line?: string; fact?: string } = shot && list ? scriptFor(shot, list, lang) : {};
+  const say: { line?: string; fact?: string } = shot && list ? scriptFor(shot, list, lang, length) : {};
 
   return (
     <BottomSheet open={!!shot} onClose={onClose} title={shot?.title}>
