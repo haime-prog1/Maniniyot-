@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Clapperboard, Home, LayoutGrid, PlusSquare, UserRound } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { cn, spring } from '../../lib/utils';
 import { useUI } from '../../store/useUI';
 
@@ -14,6 +14,7 @@ const tabs = [
 /** Flat, icon-only bottom bar in the style of social apps. */
 export function TabBar() {
   const openCreate = useUI((s) => s.openCreate);
+  const { pathname } = useLocation();
 
   const renderTab = (t: (typeof tabs)[number]) => (
     <NavLink key={t.to} to={t.to} end={t.to === '/'} aria-label={t.label} className="relative flex h-12 flex-1 items-center justify-center">
@@ -27,6 +28,9 @@ export function TabBar() {
       )}
     </NavLink>
   );
+
+  // Full-screen editors have their own toolbar.
+  if (pathname.startsWith('/collage/')) return null;
 
   return (
     <nav

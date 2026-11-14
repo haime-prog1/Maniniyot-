@@ -1,16 +1,20 @@
-import { ClipboardCopy, Database, HardDrive, Lock, RotateCcw, Share2, Trash2 } from 'lucide-react';
+import { ClipboardCopy, Crown, Database, HardDrive, Lock, RotateCcw, Share2, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { LargeTitle, ListGroup, ListRow, SegmentedControl } from '../../components/ui';
 import { formatBytes } from '../../lib/utils';
 import { shotListToText } from '../../services/exportText';
 import { deleteAllMedia, mediaUsage } from '../../services/mediaStore';
 import { useActiveList, useStore } from '../../store/useStore';
+import { useEntitlements, usePremium, useUpgradePrompt } from '../../services/entitlements';
 import { CAMERAS } from '../../data/cameraSettings';
 import type { CameraPref, ThemePref } from '../../types';
 
 export function Settings() {
   const { theme, setTheme, camera, setCamera, lists, clearAllMediaFlags, resetAll } = useStore();
   const active = useActiveList();
+  const premium = usePremium();
+  const revoke = useEntitlements((s) => s.revoke);
+  const showUpgrade = useUpgradePrompt((s) => s.show);
   const [exportId, setExportId] = useState(active?.id);
   const [usage, setUsage] = useState<{ count: number; bytes: number }>({ count: 0, bytes: 0 });
   const [quota, setQuota] = useState<{ usage?: number; quota?: number; persisted?: boolean }>({});
@@ -144,6 +148,18 @@ export function Settings() {
           )}
           <ListRow icon={<Lock size={17} />} label="Persistent storage" detail={quota.persisted ? 'On' : 'Not yet'} />
           <ListRow icon={<Trash2 size={17} className="text-red-500" />} label="Delete all media" destructive onClick={wipeMedia} />
+        </ListGroup>
+
+        <ListGroup
+          title="ShotList Premium"
+          footer={premium ? 'Premium is active on this device.' : "Payments aren't set up yet. Unlocking here is for testing."}
+        >
+          <ListRow icon={<Crown size={17} className="text-ig-pink" />} label="Status" detail={premium ? 'Premium' : 'Free'} />
+          {premium ? (
+            <ListRow icon={<RotateCcw size={17} />} label="Switch back to Free (testing)" onClick={revoke} />
+          ) : (
+            <ListRow icon={<Crown size={17} />} label="See Premium" onClick={() => showUpgrade()} chevron />
+          )}
         </ListGroup>
 
         <ListGroup title="Data">

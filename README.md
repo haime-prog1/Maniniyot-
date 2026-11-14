@@ -32,15 +32,65 @@ The in-app camera needs HTTPS (or `localhost`).
 - **Capture**: use the native iPhone Camera, or Quick Capture in-app with a thirds grid, a ghost framing overlay, a countdown and a front/back camera toggle.
 - **Insta360 Ace Pro 2 mode**: pick the camera in Settings or when creating a guide. Shot details then show Ace Pro 2 settings (mode, stabilisation, field of view, mounting), new guides add action-cam shots (underwater, chest-mount POV, selfie-stick follow, TimeShift), and Capture can import clips exported from the Insta360 app.
 - **Vlog Script**: a spiel to say for each shot (short or long), in Taglish or Tagalog, with facts about the destination (Boracay has 13). Open it from the trip screen, copy or share it, and see each line under "Say this" in Shot Detail.
+- **Collage Studio** (Premium features): IG Story, 4:5 post, square and seamless carousel collages from your trip shots or Photo Library. See the Collage Studio section below.
 - **Reel Builder**: captured clips in order, with durations fitted to your target length, beat-snapped cuts, a beat-drop marker and a CapCut/VN checklist.
 - **My Trips**: open, duplicate or delete trips.
 - **Settings**: theme, export as text (copy or share), storage usage, delete all media, and reset.
+
+## Collage Studio
+
+Open it from the **Images** icon on Home, or **Collage** on a trip. Collages autosave to this device and appear in **My Collages**.
+
+- **Formats**: IG Story 1080×1920, Post 4:5 1080×1350, Square 1080×1080, and Seamless carousel (2–10 slides of 1080×1350). A carousel is one long canvas. On export it is cut into `slide-01.jpg`, `slide-02.jpg`…, so photos that cross a slide border line up when people swipe.
+- **Editing**: tap a frame to add a photo. With a photo selected, drag inside it to pan, pinch to zoom, and use the handles to move, resize and rotate. Snap guides show canvas and slide edges and centers. **Adjust** has sliders for the same edits.
+- **Export**: rendered on the device from the original photos, as JPG (quality 0.92) or PNG. Phones get the share sheet (Save Images, Instagram…). Desktop downloads the file, or a ZIP for carousels.
+- **Code**: `src/features/collage/`. One renderer (`render.ts`) draws the editor, thumbnails and export, so they always match.
+
+### Adding a template
+
+Templates are data in `src/features/collage/templates.json`. Add an object to the array, with no code changes:
+
+```json
+{
+  "id": "my-template",
+  "name": "My template",
+  "formats": ["story", "post"],
+  "premium": false,
+  "style": { "gap": 16, "radius": 12, "background": { "type": "solid", "color": "#ffffff" } },
+  "frames": [
+    { "x": 0, "y": 0, "w": 1, "h": 0.6, "inset": true },
+    { "x": 0.1, "y": 0.62, "w": 0.5, "h": 0.33, "rotation": -4, "inset": false,
+      "matte": { "color": "#ffffff", "pad": 24, "bottom": 90 } }
+  ],
+  "texts": [{ "preset": "location", "x": 0.06, "y": 0.9, "w": 0.6, "size": 40, "align": "left" }]
+}
+```
+
+- **Units**: `x` and `w` are in slides (1 = one 1080 px slide), and `y` and `h` are fractions of the height (0–1). For a carousel template, set `"formats": ["carousel"]` and `"panels": 3`. A frame such as `"x": 0.6, "w": 1` then crosses from slide 1 into slide 2.
+- **Frame options**:
+  - `inset: true` frames get the adjustable spacing around them, which suits grids.
+  - `matte` draws a polaroid border.
+  - `rotation` is in degrees.
+- **Style**: `gap`, `radius`, `borderWidth`, `borderColor`, `background` (`solid`, `gradient` with `from`/`to`/`angle`, or `blur` with `dim`) and `decor` (`"sprockets"` for film).
+- **Texts**: `preset` is `location`, `date`, `title` or `caption`. You can override `text`, `size`, `align`, `pairId` (a font pair id from `fonts.ts`), `role` (`title`/`body`), `color`, `shadow`, `outline` and `bg`.
+
+Font pairs (`fonts.ts`) and filters (`filters.ts`) are plain config arrays as well. Add an entry to offer a new one.
+
+### Premium
+
+- **Flags**: templates, font pairs and filters can set `"premium": true`. Free users still see them, with a **PRO** badge. Tapping one opens the upgrade sheet instead of applying it. Free exports include a small "made with ShotList" watermark, and Premium can turn it off.
+- **One module decides access**: `src/services/entitlements.ts`.
+  - `isPremium()` / `usePremium()`: is the user premium?
+  - `isLocked(item)`: is this flagged item off-limits for the current user?
+  - `requirePremium(item, reason)`: returns true if allowed, otherwise opens the upgrade sheet.
+  - `purchasePremium()` / `restorePurchases()`: **placeholders**. Today, "Unlock Premium" grants Premium on the device so you can test.
+- **To add real payments**: replace the body of `purchasePremium()` with your provider's checkout (Stripe, RevenueCat, App Store…). Call `useEntitlements.getState().grant('purchase')` once the purchase is verified, and implement `restorePurchases()` with the same provider. Nothing else needs to change. For testing, Settings has **Switch back to Free**.
 
 ## Privacy
 
 **Your photos and videos never leave this device.**
 
-- Captured clips and photos are stored only in this browser's IndexedDB (via `idb-keyval`), linked to the shot.
+- Captured clips and photos are stored only in this browser's IndexedDB (via `idb-keyval`), linked to the shot. Collage photos and projects are stored the same way, and collages are rendered and exported on the device.
 - ShotList has no server, no analytics and no third-party SDKs. Media is never uploaded or sent anywhere.
 - Media leaves the device only when you tap **Share** and choose where it goes (Save to Photos, CapCut, AirDrop…).
 - Camera permission is requested only when you tap **Quick Capture**, never when the app loads. The camera turns off as soon as you close the capture screen.

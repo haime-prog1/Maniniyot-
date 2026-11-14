@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Bookmark, ChevronRight, Heart, MapPin, Plus, Search, Send, Sparkles } from 'lucide-react';
+import { Bookmark, ChevronRight, Heart, Images, MapPin, Plus, Search, Send, Sparkles } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlassButton, ProgressRing } from '../../components/ui';
@@ -139,6 +139,9 @@ export function HomeScreen() {
         <div className="flex h-12 items-center justify-between px-4">
           <h1 className="text-ig text-[26px] font-extrabold tracking-tight">ShotList</h1>
           <div className="flex items-center gap-4">
+            <button onClick={() => navigate('/collages')} aria-label="Collage Studio" className="flex h-11 w-11 items-center justify-center">
+              <Images size={24} />
+            </button>
             <button onClick={() => navigate('/trips')} aria-label="My trips">
               <Heart size={25} />
             </button>

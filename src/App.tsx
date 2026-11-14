@@ -10,6 +10,9 @@ import { ShotListScreen } from './features/shotlist/ShotListScreen';
 import { MyTrips } from './features/trips/MyTrips';
 import { ScriptScreen } from './features/script/ScriptScreen';
 import { StoryStudio } from './features/stories/StoryStudio';
+import { UpgradeSheet } from './features/premium/UpgradeSheet';
+import { CollageEditor } from './features/collage/CollageEditor';
+import { MyCollages } from './features/collage/MyCollages';
 import { useStore } from './store/useStore';
 
 function useTheme() {
@@ -45,6 +48,8 @@ function AnimatedRoutes() {
         <Route path="/trips" element={<MyTrips />} />
         <Route path="/stories/:id" element={<StoryStudio />} />
         <Route path="/script/:id" element={<ScriptScreen />} />
+        <Route path="/collages" element={<MyCollages />} />
+        <Route path="/collage/:id" element={<CollageEditor />} />
         <Route path="/reel" element={<ReelBuilder />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<HomeScreen />} />
@@ -62,6 +67,7 @@ export default function App() {
         <AnimatedRoutes />
         <TabBar />
         <CreateGuideSheet />
+        <UpgradeSheet />
       </HashRouter>
     </MotionConfig>
   );
