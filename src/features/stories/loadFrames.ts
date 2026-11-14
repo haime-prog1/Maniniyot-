@@ -3,7 +3,7 @@ import type { ShotList } from '../../types';
 import type { Frame } from './templates';
 
 /** Grab a still from a video blob, on-device. */
-async function videoFrame(blob: Blob): Promise<Frame | null> {
+export async function videoFrame(blob: Blob): Promise<Frame | null> {
   const url = URL.createObjectURL(blob);
   try {
     const v = document.createElement('video');
