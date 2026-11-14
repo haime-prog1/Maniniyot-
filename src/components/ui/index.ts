@@ -8,3 +8,4 @@ export { TabBar } from './TabBar';
 export { Toggle } from './Toggle';
 export { ListGroup, ListRow } from './ListGroup';
 export { Background } from './Background';
+export { LockBadge } from './LockBadge';

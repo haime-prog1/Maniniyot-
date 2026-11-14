@@ -10,6 +10,7 @@ import { ShotListScreen } from './features/shotlist/ShotListScreen';
 import { MyTrips } from './features/trips/MyTrips';
 import { ScriptScreen } from './features/script/ScriptScreen';
 import { StoryStudio } from './features/stories/StoryStudio';
+import { UpgradeSheet } from './features/premium/UpgradeSheet';
 import { useStore } from './store/useStore';
 
 function useTheme() {
@@ -62,6 +63,7 @@ export default function App() {
         <AnimatedRoutes />
         <TabBar />
         <CreateGuideSheet />
+        <UpgradeSheet />
       </HashRouter>
     </MotionConfig>
   );
