@@ -1,5 +1,5 @@
 import { Reorder } from 'framer-motion';
-import { Eye, Film, Mic, Plus, Sparkles } from 'lucide-react';
+import { Eye, Film, Images, Mic, Plus, Sparkles } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlassButton, GlassCard, LargeTitle, ProgressRing } from '../../components/ui';
@@ -88,7 +88,7 @@ export function ShotListScreen() {
         <div className="mt-3 h-1 overflow-hidden rounded-full bg-black/10 dark:bg-white/15" aria-hidden>
           <div className="h-full rounded-full bg-ig transition-all" style={{ width: `${visible.length ? (captured / visible.length) * 100 : 0}%` }} />
         </div>
-        <div className="mt-3 grid grid-cols-3 gap-2">
+        <div className="mt-3 grid grid-cols-4 gap-2">
           <GlassButton size="sm" className="!px-2" icon={<Mic size={15} />} onClick={() => navigate(`/script/${list.id}`)}>
             Script
           </GlassButton>
@@ -97,6 +97,9 @@ export function ShotListScreen() {
           </GlassButton>
           <GlassButton size="sm" className="!px-2" icon={<Film size={15} />} onClick={() => navigate('/reel')}>
             Reel
+          </GlassButton>
+          <GlassButton size="sm" className="!px-2" icon={<Images size={15} />} onClick={() => navigate(`/collages?new=1&trip=${list.id}`)}>
+            Collage
           </GlassButton>
         </div>
       </div>

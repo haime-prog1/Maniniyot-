@@ -1,10 +1,11 @@
 import { AnimatePresence, PresenceContext, motion, useDragControls } from 'framer-motion';
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import { spring } from '../../lib/utils';
 
 let openCount = 0;
+const sheetStack: symbol[] = [];
 
 interface Props {
   open: boolean;
@@ -17,18 +18,27 @@ interface Props {
 export function BottomSheet({ open, onClose, title, children, footer }: Props) {
   const controls = useDragControls();
 
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
+
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    // Escape closes only the topmost sheet.
+    const token = Symbol('sheet');
+    sheetStack.push(token);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && sheetStack[sheetStack.length - 1] === token) closeRef.current();
+    };
     window.addEventListener('keydown', onKey);
     openCount++;
     document.body.style.overflow = 'hidden';
     return () => {
       window.removeEventListener('keydown', onKey);
+      sheetStack.splice(sheetStack.indexOf(token), 1);
       openCount--;
       if (openCount <= 0) document.body.style.overflow = '';
     };
-  }, [open, onClose]);
+  }, [open]);
 
   return createPortal(
     <AnimatePresence>

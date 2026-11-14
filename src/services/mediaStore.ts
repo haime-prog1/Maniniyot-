@@ -42,6 +42,15 @@ export async function deleteListMedia(listId: string) {
 
 export const deleteAllMedia = () => clear(store);
 
+/** Every captured shot that has media, as { listId, shotId }. */
+export async function listMediaKeys(): Promise<{ listId: string; shotId: string }[]> {
+  const all = (await keys(store)) as string[];
+  return all.map((k) => {
+    const [listId, shotId] = k.split('::');
+    return { listId, shotId };
+  });
+}
+
 export async function mediaUsage(): Promise<{ count: number; bytes: number }> {
   const all = await entries<string, MediaRecord>(store);
   return { count: all.length, bytes: all.reduce((n, [, r]) => n + (r?.size ?? 0), 0) };
